@@ -120,10 +120,10 @@ def main():
                 file = get_and_prepare_file()
                 upload_file(file)
                 last_time_modified = new_time_modified
-            time.sleep(15)
+            time.sleep(10*60)
         except Exception as exception:
             logging.error(exception)
-            time.sleep(30)
+            time.sleep(20*60)
 
 
 if __name__ == '__main__':
