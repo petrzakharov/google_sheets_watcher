@@ -98,16 +98,14 @@ def get_and_prepare_file():
 
 
 def upload_file(file):
-    drop_expression = 'DROP TABLE test_table'
-    engine = create_engine(
-        'postgresql://{username}:{password}@localhost:{port}/{database}'.format(
+    connection = 'postgresql://{username}:{password}@{host}:{port}/{database}'.format(
             username=os.getenv('POSTGRES_USER'),
             password=os.getenv('POSTGRES_PASSWORD'),
             port=os.getenv('DB_PORT'),
-            database=os.getenv('DB_NAME')
+            database=os.getenv('DB_NAME'),
+            host=os.getenv('DB_HOST')
         )
-    )
-    engine.execute(text(drop_expression))
+    engine = create_engine(connection)
     file.to_sql('test_table', engine, if_exists='replace')
     logging.info(SUCCESS_MESSAGES['db'])
 
@@ -122,10 +120,10 @@ def main():
                 file = get_and_prepare_file()
                 upload_file(file)
                 last_time_modified = new_time_modified
-            time.sleep(6)
+            time.sleep(15)
         except Exception as exception:
             logging.error(exception)
-            time.sleep(6)
+            time.sleep(30)
 
 
 if __name__ == '__main__':
