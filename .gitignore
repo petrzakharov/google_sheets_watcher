@@ -5,3 +5,4 @@ venv
 credentials.json
 *.log
 .idea
+.DS_Store
